@@ -53,42 +53,53 @@ mergeDatasets <- function () {
 }
 
 ## extract only mean and std columns and name them according to features txt
+## -- V1
 getMeanAndStdFeatures <- function () {
     features <- read.table(paste(mainFolder, "features.txt", sep = "/"))    
     
     features[with(features, grepl("(mean|std)\\(\\)", features$V2, perl = TRUE)), ]
 }
 
-getMeanAndStdColumns <- function (merged) {
+getOnlyMeanAndStdColumns <- function (merged) {
     features <- getMeanAndStdFeatures()  
     
     valid <- features$V1
     names <- features$V2
     
-    merged <- merged[,append(valid, c(ncol(merged), ncol(merged) - 1))]
+    merged <- merged[,append(valid, c(ncol(merged) - 1, ncol(merged)))]
     names(merged) <- append(as.vector(names), c("Subject", "Activity"))
     
     merged
 }
 
-## get activity labels
+## -- V2
+getFeatures <- function () {
+    read.table(paste(mainFolder, "features.txt", sep = "/"))
+}
+
+getOnlyMeanAndStdColumnsV2 <- function (merged) {
+    features <- getFeatures()
+    
+    names(merged) <- append(as.vector(features$V2), c("Subject", "Activity"))
+
+    select(merged, matches("((mean|std)\\(\\))|Subject|Activity"))
+        
+}
+
+## add meaningful activity labels
 getActivityLabels <- function () {
     read.table(paste(mainFolder, "activity_labels.txt", sep = "/")) 
 }
 
-## add meaningful activity labels
 addActivityLabels <- function (merged) {
-    activities <- getActivityLabels()
-    
-    merged <- 
-        merged %>%
-            merge(activities, by.x = "Activity", by.y = "V1") %>%
-                mutate(Activity = V2)
-    
-    merged[1:(ncol(merged)-1)]
+
+    merged %>%
+        merge(getActivityLabels(), by.x = "Activity", by.y = "V1") %>%
+            mutate(Activity = V2) %>%
+                select(-V2)
 }
 
-## melt the dataset
+## summarize the dataset
 summarizeDataset <- function (merged) {
     
     merged %>%
@@ -102,7 +113,7 @@ main <- function () {
     downloadAndUnzipSamsumgData()
     
     mergeDatasets() %>%
-        getMeanAndStdColumns %>%
+        getOnlyMeanAndStdColumnsV2 %>%
         addActivityLabels %>%
         summarizeDataset
         
