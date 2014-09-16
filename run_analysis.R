@@ -28,7 +28,7 @@ getTrainingDataset <- function () {
     subjects <- read.table(paste(trainFolder, "subject_train.txt", sep = "/"))
     
     ds %>% 
-        mutate(labels, Label = labels$V1) %>%
+        mutate(labels, Activity = labels$V1) %>%
         mutate(subjects, Subject = subjects$V1) 
     
 }
@@ -40,7 +40,7 @@ getTestDataset <- function () {
     subjects <- read.table(paste(testFolder, "subject_test.txt", sep = "/"))
     
     ds %>% 
-        mutate(labels, Label = labels$V1) %>%
+        mutate(labels, Activity = labels$V1) %>%
         mutate(subjects, Subject = subjects$V1) 
 }
 
@@ -67,7 +67,7 @@ getOnlyMeanAndStdColumns <- function (merged) {
     names <- features$V2
     
     merged <- merged[,append(valid, c(ncol(merged) - 1, ncol(merged)))]
-    names(merged) <- append(as.vector(names), c("Subject", "Activity"))
+    names(merged) <- append(as.vector(names), c("Activity", "Subject"))
     
     merged
 }
@@ -80,9 +80,9 @@ getFeatures <- function () {
 getOnlyMeanAndStdColumnsV2 <- function (merged) {
     features <- getFeatures()
     
-    names(merged) <- append(as.vector(features$V2), c("Subject", "Activity"))
+    names(merged) <- append(as.vector(features$V2), c("Activity", "Subject"))
 
-    select(merged, matches("((mean|std)\\(\\))|Subject|Activity"))
+    select(merged, matches("((mean|std)\\(\\))|Activity|Subject"))
         
 }
 
