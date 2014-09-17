@@ -1,4 +1,5 @@
 ## load libraries
+library(plyr)
 library(dplyr)
 library(reshape2)
 
@@ -105,7 +106,12 @@ summarizeDataset <- function (merged) {
     merged %>%
         melt(id = c("Subject", "Activity")) %>%
         arrange(Subject, Activity) %>%
-        ddply(.(Subject, Activity, variable), summarize, mean = mean(value), std = sd(value))
+        ddply(.(Subject, Activity, variable), summarize, Average = mean(value))
+}
+
+## write dataset
+writeDataset <- function (tidy) {
+    write.table(tidy, "tidyDataset", row.name = FALSE)
 }
 
 ## main function
