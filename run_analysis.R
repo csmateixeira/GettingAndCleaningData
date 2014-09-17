@@ -17,12 +17,15 @@ trainFolder <- paste(mainFolder, "train", sep = "/")
 downloadAndUnzipSamsumgData <- function(){
     
     if(!file.exists(zipedFileName)) {
-        download.file(zipedFileUrl, destfile = zipedFileName, method = method) 
+        download.file(zipedFileUrl, destfile = zipedFileName, method = method)         
+    }
+    
+    if(!file.exists(mainFolder)) {
         unzip(zipedFileName)
     }
 }
 
-## get the training data set
+## get the training data set and add Activity and Subject information
 getTrainingDataset <- function () {
     ds <- read.table(paste(trainFolder,"X_train.txt", sep = "/"))
     labels <- read.table(paste(trainFolder, "y_train.txt", sep = "/"))
@@ -54,31 +57,11 @@ mergeDatasets <- function () {
 }
 
 ## extract only mean and std columns and name them according to features txt
-## -- V1
-getMeanAndStdFeatures <- function () {
-    features <- read.table(paste(mainFolder, "features.txt", sep = "/"))    
-    
-    features[with(features, grepl("(mean|std)\\(\\)", features$V2, perl = TRUE)), ]
-}
-
-getOnlyMeanAndStdColumns <- function (merged) {
-    features <- getMeanAndStdFeatures()  
-    
-    valid <- features$V1
-    names <- features$V2
-    
-    merged <- merged[,append(valid, c(ncol(merged) - 1, ncol(merged)))]
-    names(merged) <- append(as.vector(names), c("Activity", "Subject"))
-    
-    merged
-}
-
-## -- V2
 getFeatures <- function () {
     read.table(paste(mainFolder, "features.txt", sep = "/"))
 }
 
-getOnlyMeanAndStdColumnsV2 <- function (merged) {
+getOnlyMeanAndStdColumns <- function (merged) {
     features <- getFeatures()
     
     names(merged) <- append(as.vector(features$V2), c("Activity", "Subject"))
@@ -119,7 +102,7 @@ main <- function () {
     downloadAndUnzipSamsumgData()
     
     mergeDatasets() %>%
-        getOnlyMeanAndStdColumnsV2 %>%
+        getOnlyMeanAndStdColumns %>%
         addActivityLabels %>%
         summarizeDataset
         
