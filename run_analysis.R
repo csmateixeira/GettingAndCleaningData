@@ -104,9 +104,9 @@ addActivityLabels <- function (merged) {
 summarizeDataset <- function (merged) {
     
     merged %>%
-        melt(id = c("Subject", "Activity")) %>%
+        melt(id = c("Subject", "Activity"), variable.name = "Feature") %>%
         arrange(Subject, Activity) %>%
-        ddply(.(Subject, Activity, variable), summarize, Average = mean(value))
+        ddply(.(Subject, Activity, Feature), summarize, Average = mean(value))
 }
 
 ## write dataset
