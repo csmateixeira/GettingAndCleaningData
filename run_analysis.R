@@ -111,7 +111,7 @@ summarizeDataset <- function (merged) {
 
 ## write dataset
 writeDataset <- function (tidy) {
-    write.table(tidy, "tidyDataset", row.name = FALSE)
+    write.table(tidy, "tidyDataset.txt", row.name = FALSE)
 }
 
 ## main function
