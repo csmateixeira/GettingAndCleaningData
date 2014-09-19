@@ -5,6 +5,25 @@ README
 
 1. Download the data and unzip it on your local working directory. the folder "UCI HAR Dataset" should be directly under the working directory.
     * You can also use the provided function - `downloadAndUnzipSamsumgData` - that will do this for you (only if the target directory does not exist already).
+
+```
+    -UCI HAR Dataset
+      |-activity_labels.txt
+      |-features.txt
+      |-features_info.tx
+      |-README.txt
+      |-test
+      |   |-Inertial Signals (content ignored in this script)
+      |   |-subject_test.txt
+      |   |-X_test.txt
+      |   |-y_test.txt
+      |-train
+          |-Inertial Signals (content ignored in this script)
+          |-subject_train.txt
+          |-X_train.txt
+          |-y_train.txt
+```
+
 2. To obtain the tidy dataset just run the main() function and assign its output to the variable you want
     * _for example:_ `tidyDataset <- main()`
 3. To print the tidy dataset into a text file run the `writeDataset` function and give it the tidy data frame as an argument. It will produce a file called tidyDataset.txt.
