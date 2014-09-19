@@ -9,6 +9,8 @@ README
     * _for example:_ `tidyDataset <- main()`
 3. To print the tidy dataset into a text file run the `writeDataset` function and give it the tidy data frame as an argument. It will produce a file called tidyDataset.txt.
     * _for example:_ `writeDataset(tidyDataset)`
+4. To read the written dataset back into memory you can use the `readDataset` function and give the text file name as an argument. This function assumes the text file is directly in the working directory.
+    * _for example:_ `readDataset("tidyDataset.txt")`
 
 ### Functions in the file
 #### Main functions
@@ -16,6 +18,7 @@ README
 ```
 downloadAndUnzipSamsumgData
 ```
+
 This function downloads the zipped data file and unzips it to the working directory.
 
 ```
@@ -63,6 +66,11 @@ The main function combines the transformations of all the functions with the exc
 getFeatures
 ```
 This function loads the features into a table.
+
+```
+changeLabels
+```
+This function changes the feature names to readable names.
 
 ```
 getActivityLabels
