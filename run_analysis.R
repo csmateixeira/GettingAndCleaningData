@@ -32,8 +32,8 @@ getTrainingDataset <- function () {
     subjects <- read.table(paste(trainFolder, "subject_train.txt", sep = "/"))
     
     ds %>% 
-        mutate(labels, Activity = labels$V1) %>%
-        mutate(subjects, Subject = subjects$V1) 
+        transform(activity = labels$V1) %>%
+        transform(Subject = subjects$V1) 
     
 }
 
@@ -44,8 +44,8 @@ getTestDataset <- function () {
     subjects <- read.table(paste(testFolder, "subject_test.txt", sep = "/"))
     
     ds %>% 
-        mutate(labels, Activity = labels$V1) %>%
-        mutate(subjects, Subject = subjects$V1) 
+        transform(activity = labels$V1) %>%
+        transform(Subject = subjects$V1) 
 }
 
 ## merge test and train data
@@ -64,10 +64,26 @@ getFeatures <- function () {
 getOnlyMeanAndStdColumns <- function (merged) {
     features <- getFeatures()
     
-    names(merged) <- append(as.vector(features$V2), c("Activity", "Subject"))
-
-    select(merged, matches("((mean|std)\\(\\))|Activity|Subject"))
+    names(merged) <- append(as.vector(features$V2), c("activity", "subject"))
+    
+    merged <- select(merged, matches("((mean|std)\\(\\))|activity|subject"))
+    
+    names(merged) <- changeLabels(names(merged))
+    
+    merged
         
+}
+
+changeLabels <- function (names) {
+    names %>%
+        gsub(pattern = "-|\\(|\\)", replacement = "") %>%
+        gsub(pattern = "^t", replacement = "time") %>%
+        gsub(pattern = "^f", replacement = "frequency") %>%
+        gsub(pattern = "BodyBody", replacement = "body") %>%
+        gsub(pattern = "Acc", replacement = "accelerator") %>%
+        gsub(pattern = "Gyro", replacement = "gyroscope") %>%
+        gsub(pattern = "Mag", replacement = "magnitude") %>%
+        tolower
 }
 
 ## add meaningful activity labels
@@ -78,8 +94,8 @@ getActivityLabels <- function () {
 addActivityLabels <- function (merged) {
 
     merged %>%
-        merge(getActivityLabels(), by.x = "Activity", by.y = "V1") %>%
-            mutate(Activity = V2) %>%
+        merge(getActivityLabels(), by.x = "activity", by.y = "V1") %>%
+            mutate(activity = V2) %>%
                 select(-V2)
 }
 
@@ -87,9 +103,9 @@ addActivityLabels <- function (merged) {
 summarizeDataset <- function (merged) {
     
     merged %>%
-        melt(id = c("Subject", "Activity"), variable.name = "Feature") %>%
-        arrange(Subject, Activity) %>%
-        ddply(.(Subject, Activity, Feature), summarize, Average = mean(value))
+        melt(id = c("subject", "activity"), variable.name = "feature") %>%
+        arrange(subject, activity) %>%
+        ddply(.(subject, activity, feature), summarize, average = mean(value))
 }
 
 ## write dataset
