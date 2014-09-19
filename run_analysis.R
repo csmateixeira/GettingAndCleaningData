@@ -113,6 +113,11 @@ writeDataset <- function (tidy) {
     write.table(tidy, "tidyDataset.txt", row.name = FALSE)
 }
 
+## read dataset
+readDataset <- function (tidyFile) {
+    read.table(tidyFile, header = TRUE)
+}
+
 ## main function
 main <- function () {
     downloadAndUnzipSamsumgData()
