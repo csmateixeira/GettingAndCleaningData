@@ -33,4 +33,28 @@ The final feature name transformations included in the tidy dataset were as foll
         <td>tBodyAcc-mean()-Z</td>
         <td>timebodyacceleratormeanz</td>
     </tr>
+    <tr>
+        <td>tBodyAcc-std()-X</td>
+        <td>timebodyacceleratorstdx</td>
+    </tr>
+    <tr>
+        <td>tBodyAcc-std()-Y</td>
+        <td>timebodyacceleratorstdy</td>
+    </tr>
+    <tr>
+        <td>tBodyAcc-std()-Z</td>
+        <td>timebodyacceleratorstdz</td>
+    </tr>
+    <tr>
+        <td>tBodyAcc-std()-Z</td>
+        <td>timebodyacceleratorstdz</td>
+    </tr>
+    <tr>
+        <td>tBodyAcc-std()-Z</td>
+        <td>timebodyacceleratorstdz</td>
+    </tr>
+    <tr>
+        <td>tBodyAcc-std()-Z</td>
+        <td>timebodyacceleratorstdz</td>
+    </tr>
 </table>
