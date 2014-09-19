@@ -33,8 +33,40 @@ Feature labels were modified in the following pattern:
 ### Activity labels
 
 Activity data was imported as a table using `read.table()`. <br />
+
+Activity Labels: 
+
+<table>
+    <tr>
+        <td>1</td>
+        <td>WALKING</td>       
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>WALKING_UPSTAIRS</td>       
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>WALKING_DOWNSTAIRS</td>       
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>SITTING</td>       
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>STANDING</td>       
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>LAYING</td>       
+    </tr>
+</table>
+
 The activities table was merged with the data set by the column "V1" in the data table and column "activity" in the dataset.<br />
 The column "activity" in the dataset was assigned the respective values in the "V2" column of the activities data and the "V2" column that resulted from the merge was dropped. Only activity labels remained in the dataset.<br />
+
+
 
 ### Summarised data set
 
