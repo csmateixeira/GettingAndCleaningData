@@ -16,8 +16,19 @@ Feature labels were modified in the following pattern:
 
 The final feature name transformations included in the tidy dataset were as follows:
 
-| Original name     | Transformed Name          |
+<table>
+    <th>
+        <td>Original name</td>
+        <td>Transformed Name</td>
+    </th>
+    <tr>
+        <td>tBodyAcc-mean()-X</td>
+        <td>timebodyacceleratormeanx</td>
+    </tr>
+</table>
+
+|      |           |
 |-----------------------------------------------|
-| tBodyAcc-mean()-X | timebodyacceleratormeanx  |
+|  |   |
 | tBodyAcc-mean()-Y | timebodyacceleratormeany  |
 | tBodyAcc-mean()-Z | timebodyacceleratormeanz  |
